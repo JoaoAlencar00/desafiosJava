@@ -35,7 +35,7 @@ public class AnalisadorDeVendas {
         }
 
         double totalVendas = 0;
-        double maiorVenda = listaVendas.get(0);
+        double maiorVenda = listaVendas.getFirst();
         int contaVendas = 0;
 
         for (double venda : listaVendas){
