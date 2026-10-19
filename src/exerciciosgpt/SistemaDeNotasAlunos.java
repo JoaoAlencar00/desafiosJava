@@ -14,7 +14,7 @@ public class SistemaDeNotasAlunos {
         for (int i = 0; i < 5; i++){
 
             String nome;
-            boolean temNumero = false;
+            boolean temNumero;
 
             do {
                 System.out.println("Digite o nome do aluno: ");
