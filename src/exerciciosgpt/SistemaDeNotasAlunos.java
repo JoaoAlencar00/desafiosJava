@@ -24,6 +24,7 @@ public class SistemaDeNotasAlunos {
                 for (int j = 0; j < nome.length(); j++){
                     if (Character.isDigit(nome.charAt(j))){
                         temNumero = true;
+                        break;
                     }
                 }
 
