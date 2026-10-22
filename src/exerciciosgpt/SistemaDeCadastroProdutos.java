@@ -20,23 +20,10 @@ public class SistemaDeCadastroProdutos {
             precoProduto.add(preco);
         }
 
-        int quantidadeAcimeDe50 = 0;
-        int indiceMaisCaro = 0;
-        int indiceMaisBarato = 0;
+        exibirProdutos(nomeProduto, precoProduto);
 
-        for (int i = 0; i < precoProduto.size(); i++) {
-            double preco = precoProduto.get(i);
-
-            if (preco > precoProduto.get(indiceMaisCaro)) {
-                indiceMaisCaro = i;
-            }
-            if (preco < precoProduto.get(indiceMaisBarato)) {
-                indiceMaisBarato = i;
-            }
-            if (preco > 50){
-                quantidadeAcimeDe50++;
-            }
-        }
+        int indiceMaisCaro = indiceDoProdutoMaisCaro(precoProduto);
+        int indiceMaisBarato = indiceDoProdutoMaisBarato(precoProduto);
 
         System.out.println("Nome do produto: " + nomeProduto.get(indiceMaisCaro) + " , "
                 + " Preço do produto mais caro: " + precoProduto.get(indiceMaisCaro));
@@ -44,12 +31,12 @@ public class SistemaDeCadastroProdutos {
         System.out.println("Nome do produto: " + nomeProduto.get(indiceMaisBarato) + " , "
                 + " Preço do produto mais barato: " + precoProduto.get(indiceMaisBarato));
 
-        System.out.println("Preço acima de 50: " + quantidadeAcimeDe50);
+        int quantidadeAcimaDe50 = contarPrecoAcimaDe50(precoProduto);
+        System.out.println("Preço acima de 50: " + quantidadeAcimaDe50);
 
         double media = calcularMedia(precoProduto);
         System.out.println("Média de preços: " + media);
 
-        exibirProdutos(nomeProduto, precoProduto);
         scanner.close();
     }
 
@@ -109,4 +96,34 @@ public class SistemaDeCadastroProdutos {
         return preco;
     }
 
+    static int contarPrecoAcimaDe50(ArrayList<Double> precos) {
+        int quantidadeAcimaDe50 = 0;
+
+        for (double preco : precos) {
+            if (preco > 50) {
+                quantidadeAcimaDe50++;
+            }
+        }
+        return quantidadeAcimaDe50;
+    }
+
+    static int indiceDoProdutoMaisCaro(ArrayList<Double> precos) {
+        int indiceMaisCaro = 0;
+        for (int i = 0; i < precos.size(); i++) {
+            if (precos.get(i) > precos.get(indiceMaisCaro)) {
+                indiceMaisCaro = i;
+            }
+        }
+        return indiceMaisCaro;
+    }
+
+    static int indiceDoProdutoMaisBarato(ArrayList<Double> precos) {
+        int indiceMaisBarato = 0;
+        for (int i = 0; i < precos.size(); i++) {
+            if (precos.get(i) < precos.get(indiceMaisBarato)) {
+                indiceMaisBarato = i;
+            }
+        }
+        return indiceMaisBarato;
+    }
 }
