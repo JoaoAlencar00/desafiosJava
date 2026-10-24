@@ -7,52 +7,53 @@ public class SistemaDeCadastroProdutos {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        ArrayList<String> nomeProduto = new ArrayList<>();
-
-        ArrayList<Double> precoProduto = new ArrayList<>();
+        ArrayList<Produto> produtos = new ArrayList<>();
 
         for (int i = 0; i < 4; i++) {
 
             String nome = lerNomeValido(scanner);
             double preco = lerPrecoValido(scanner);
 
-            nomeProduto.add(nome);
-            precoProduto.add(preco);
+            Produto produto = new Produto(nome, preco);
+            produtos.add(produto);
+
         }
 
-        exibirProdutos(nomeProduto, precoProduto);
+        exibirProdutos(produtos);
 
-        int indiceMaisCaro = indiceDoProdutoMaisCaro(precoProduto);
-        int indiceMaisBarato = indiceDoProdutoMaisBarato(precoProduto);
+        int indiceMaisCaro = indiceDoProdutoMaisCaro(produtos);
+        int indiceMaisBarato = indiceDoProdutoMaisBarato(produtos);
 
-        System.out.println("Nome do produto: " + nomeProduto.get(indiceMaisCaro) + " , "
-                + " Preço do produto mais caro: " + precoProduto.get(indiceMaisCaro));
+        System.out.println("Nome do produto: " + produtos.get(indiceMaisCaro) + " , "
+                + " Preço do produto mais caro: " + produtos.get(indiceMaisCaro));
 
-        System.out.println("Nome do produto: " + nomeProduto.get(indiceMaisBarato) + " , "
-                + " Preço do produto mais barato: " + precoProduto.get(indiceMaisBarato));
+        System.out.println("Nome do produto: " + produtos.get(indiceMaisBarato) + " , "
+                + " Preço do produto mais barato: " + produtos.get(indiceMaisBarato));
 
-        int quantidadeAcimaDe50 = contarPrecoAcimaDe50(precoProduto);
+        int quantidadeAcimaDe50 = contarPrecoAcimaDe50(produtos);
         System.out.println("Preço acima de 50: " + quantidadeAcimaDe50);
 
-        double media = calcularMedia(precoProduto);
+        double media = calcularMedia(produtos);
         System.out.println("Média de preços: " + media);
 
         scanner.close();
     }
 
-    static double calcularMedia(ArrayList<Double> precos) {
+    static double calcularMedia(ArrayList<Produto> produtos) {
         double soma = 0;
 
-        for (double preco : precos) { //pega cada preço da lista
-            soma += preco;  //adiciona soma
+        for (Produto produto : produtos) {
+            soma += produto.getPreco();
         }
-        return soma / precos.size(); //devolve a média
+        return soma / produtos.size();
     }
 
-    static void exibirProdutos(ArrayList<String> nomes, ArrayList<Double> precos) {
-        for (int i = 0; i < nomes.size(); i++) {
-            System.out.println("nome: " + nomes.get(i) + " , "
-                    + "preco: " + precos.get(i));
+    static void exibirProdutos(ArrayList<Produto> produtos) {
+
+        for (int i = 0; i < produtos.size(); i++) {
+            Produto produtoAtual = produtos.get(i);
+            System.out.println("nome: " + produtoAtual.getNome() + " , "
+                    + "preco: " + produtoAtual.getPreco());
         }
     }
 
@@ -96,31 +97,35 @@ public class SistemaDeCadastroProdutos {
         return preco;
     }
 
-    static int contarPrecoAcimaDe50(ArrayList<Double> precos) {
+    static int contarPrecoAcimaDe50(ArrayList<Produto> produtos) {
         int quantidadeAcimaDe50 = 0;
 
-        for (double preco : precos) {
-            if (preco > 50) {
+        for (Produto produto : produtos) {
+            if (produto.getPreco() > 50) {
                 quantidadeAcimaDe50++;
             }
         }
         return quantidadeAcimaDe50;
     }
 
-    static int indiceDoProdutoMaisCaro(ArrayList<Double> precos) {
+    static int indiceDoProdutoMaisCaro(ArrayList<Produto> produtos) {
         int indiceMaisCaro = 0;
-        for (int i = 0; i < precos.size(); i++) {
-            if (precos.get(i) > precos.get(indiceMaisCaro)) {
+
+        for (int i = 0; i < produtos.size(); i++) {
+            Produto produtoAtual = produtos.get(i);
+            if (produtoAtual.getPreco() > produtos.get(indiceMaisCaro).getPreco()){
                 indiceMaisCaro = i;
             }
         }
         return indiceMaisCaro;
     }
 
-    static int indiceDoProdutoMaisBarato(ArrayList<Double> precos) {
+    static int indiceDoProdutoMaisBarato(ArrayList<Produto> produtos) {
         int indiceMaisBarato = 0;
-        for (int i = 0; i < precos.size(); i++) {
-            if (precos.get(i) < precos.get(indiceMaisBarato)) {
+
+        for (int i = 0; i < produtos.size(); i++) {
+            Produto produtoAtual = produtos.get(i);
+            if (produtoAtual.getPreco() < produtos.get(indiceMaisBarato).getPreco()) {
                 indiceMaisBarato = i;
             }
         }
