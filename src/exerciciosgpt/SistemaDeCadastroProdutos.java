@@ -24,11 +24,14 @@ public class SistemaDeCadastroProdutos {
         int indiceMaisCaro = indiceDoProdutoMaisCaro(produtos);
         int indiceMaisBarato = indiceDoProdutoMaisBarato(produtos);
 
-        System.out.println("Nome do produto: " + produtos.get(indiceMaisCaro) + " , "
-                + " Preço do produto mais caro: " + produtos.get(indiceMaisCaro));
+        Produto maisCaro = produtos.get(indiceMaisCaro);
+        Produto maisBarato = produtos.get(indiceMaisBarato);
 
-        System.out.println("Nome do produto: " + produtos.get(indiceMaisBarato) + " , "
-                + " Preço do produto mais barato: " + produtos.get(indiceMaisBarato));
+        System.out.println("Nome do produto: " + maisCaro.getNome()
+                + ", Preço do produto mais caro: " + maisCaro.getPreco());
+
+        System.out.println("Nome do produto: " + maisBarato.getNome()
+                + ", Preço do produto mais barato: " + maisBarato.getPreco());
 
         int quantidadeAcimaDe50 = contarPrecoAcimaDe50(produtos);
         System.out.println("Preço acima de 50: " + quantidadeAcimaDe50);
@@ -81,20 +84,24 @@ public class SistemaDeCadastroProdutos {
     }
 
     static double lerPrecoValido(Scanner scanner) {
-        double preco;
-
-        do {
+        while (true) {
             System.out.println("Digite o preço do produto:");
-            preco = scanner.nextDouble();
 
-            if (preco <= 0) {
-                System.out.println("Digite um preço maior que zero.");
+            if (!scanner.hasNextDouble()) {
+                System.out.println("Entrada inválida. Digite um número.");
+                scanner.nextLine();
+                continue;
             }
-        } while (preco <= 0);
 
-        scanner.nextLine();
+            double preco = scanner.nextDouble();
+            scanner.nextLine();
 
-        return preco;
+            if (Double.isFinite(preco) && preco > 0) {
+                return preco;
+            }
+
+            System.out.println("Digite um preço válido maior que zero.");
+        }
     }
 
     static int contarPrecoAcimaDe50(ArrayList<Produto> produtos) {
